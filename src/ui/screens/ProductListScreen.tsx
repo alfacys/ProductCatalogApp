@@ -110,9 +110,9 @@ function Footer({
 
 const styles = StyleSheet.create({
 root: { flex: 1, backgroundColor: colors.background},
-body: { flex: 1, width:'100%', maxWidth: MAX_WIDTH, alignsSelf: 'center' },
+body: { flex: 1, width:'100%', maxWidth: MAX_WIDTH, alignSelf: 'center' },
 count: { fontSize: 13, color: colors.muted, marginBottom: spacing.lg },
 footer: { paddingVertical: spacing.xl, alignItems: 'center', justifyContent: 'center' },
 footerText: { fontSize: 13, color: colors.muted, textAlign: 'center'},
-retry: { margintop: spacing.sm,  fontSize: 14 fontWeight: '700', color: colors.text, textDecorationLine: 'underline' },
+retry: { marginTop: spacing.sm,  fontSize: 14, fontWeight: '700', color: colors.text, textDecorationLine: 'underline' },
 });
