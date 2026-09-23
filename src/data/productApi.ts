@@ -3,7 +3,7 @@ import { Product, ProductsResponse } from './types';
 const BASE_URL = 'https://dummyjson.com';
 export const PAGE_SIZE = 20;
 
-// Builds the list URL. With a query we use the server-side search endpoint//
+/** Builds the list URL. With a query we use the server-side search endpoint. */
 export function buildListUrl(skip: number, query: string): string {
   const q = query.trim();
   const paging = `limit=${PAGE_SIZE}&skip=${skip}`;
