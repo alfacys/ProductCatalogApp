@@ -10,9 +10,11 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { Product } from '../../data/types';
+import { slugToLabel } from '../../data/categoryGroups';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useProducts } from '../../hooks/useProduct';
 import { colors, MAX_WIDTH, spacing } from '../../theme/theme';
+import { CategoryMenu } from '../components/CategoryMenu';
 import { Header } from '../components/Header';
 import { ProductCard } from '../components/ProductCard';
 import { ProductModal } from '../components/ProductModal';
@@ -29,11 +31,15 @@ function getColumns(width: number) {
 }
 
 export function ProductListScreen() {
-    const { width } = useWindowDimensions();
-    const [text, setText] = useState('');
-    const query = useDebounce(text, 400); // only hit the API 400ms after the user stops typing
+  const { width } = useWindowDimensions();
+  const [text, setText] = useState('');
+  const query = useDebounce(text, 400); // only hit the API 400ms after the user stops typing
   const [selected, setSelected] = useState<Product | null>(null);
-  const list = useProducts(query);
+  const [category, setCategory] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const list = useProducts(query, category);
+
   const columns = getColumns(width);
   const contentWidth = Math.min(width, MAX_WIDTH);
   const cardWidth = Math.floor((contentWidth - PADDING * 2 - GAP * (columns - 1)) / columns);
@@ -75,8 +81,19 @@ export function ProductListScreen() {
 
   return (
     <View style={styles.root}>
-        <Header value={text} onChange={setText} />
-        <View style={styles.body}>{body}</View>
+      <Header
+        value={text}
+        onChange={setText}
+        onOpenCategories={() => setMenuOpen(true)}
+        categoryLabel={category ? slugToLabel(category) : null}
+      />
+      <CategoryMenu
+        visible={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        onSelect={setCategory}
+        selected={category}
+      />
+      <View style={styles.body}>{body}</View>
       <ProductModal product={selected} onClose={() => setSelected(null)} />
     </View>
   );
@@ -109,10 +126,10 @@ function Footer({
 }
 
 const styles = StyleSheet.create({
-root: { flex: 1, backgroundColor: colors.bg},
-body: { flex: 1, width:'100%', maxWidth: MAX_WIDTH, alignSelf: 'center' },
-count: { fontSize: 13, color: colors.muted, marginBottom: spacing.lg },
-footer: { paddingVertical: spacing.xl, alignItems: 'center', justifyContent: 'center' },
-footerText: { fontSize: 13, color: colors.muted, textAlign: 'center'},
-retry: { marginTop: spacing.sm,  fontSize: 14, fontWeight: '700', color: colors.text, textDecorationLine: 'underline' },
+  root: { flex: 1, backgroundColor: colors.bg },
+  body: { flex: 1, width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center' },
+  count: { fontSize: 13, color: colors.muted, marginBottom: spacing.lg },
+  footer: { paddingVertical: spacing.xl, alignItems: 'center' },
+  footerText: { fontSize: 13, color: colors.muted, textAlign: 'center' },
+  retry: { marginTop: spacing.sm, fontSize: 14, fontWeight: '700', color: colors.text, textDecorationLine: 'underline' },
 });

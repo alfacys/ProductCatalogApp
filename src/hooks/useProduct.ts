@@ -10,7 +10,7 @@ function friendlyMessage(e: unknown): string {
   return 'Something went wrong. Please try again.';
 }
 
-export function useProducts(query: string) {
+export function useProducts(query: string, category: string | null) {
   const [items, setItems] = useState<Product[]>([]);
   const [total, setTotal] = useState(0);
   const [status, setStatus] = useState<ListStatus>('loading');
@@ -31,7 +31,7 @@ export function useProducts(query: string) {
       if (mode === 'initial') setStatus('loading');
       else setRefreshing(true);
       try {
-        const data = await fetchProducts(0, query);
+        const data = await fetchProducts(0, query, category);
         if (id !== requestId.current) return;
         setItems(data.products);
         setTotal(data.total);
@@ -47,7 +47,7 @@ export function useProducts(query: string) {
         if (id === requestId.current) setRefreshing(false);
       }
     },
-    [query]
+    [query, category]
   );
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export function useProducts(query: string) {
       setLoadingMore(true);
       setLoadMoreFailed(false);
       try {
-        const data = await fetchProducts(items.length, query); // skip = items already loaded
+        const data = await fetchProducts(items.length, query, category);
         if (id !== requestId.current) return;
         setItems((prev) => {
           const seen = new Set(prev.map((p) => p.id));
@@ -77,7 +77,7 @@ export function useProducts(query: string) {
         if (id === requestId.current) setLoadingMore(false);
       }
     },
-    [status, loadingMore, refreshing, hasMore, loadMoreFailed, items.length, query]
+    [status, loadingMore, refreshing, hasMore, loadMoreFailed, items.length, query, category]
   );
 
   return {

@@ -2,16 +2,21 @@ import React from 'react';
 import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { colors, MAX_WIDTH, radius, spacing } from '../../theme/theme';
 
-type Props = { value: string; onChange: (v: string) => void };
+type Props = {
+  value: string;
+  onChange: (v: string) => void;
+  onOpenCategories: () => void;
+  categoryLabel: string | null;
+};
 
-export function Header({ value, onChange }: Props) {
+export function Header({ value, onChange, onOpenCategories, categoryLabel }: Props) {
   return (
     <View style={styles.wrap}>
       <View style={styles.promo}>
         <Text style={styles.promoText}>Free delivery on orders over $50</Text>
       </View>
       <View style={styles.bar}>
-        <Text style={styles.logo}>Welcome to Shopping</Text>
+        <Text style={styles.logo}>Shoply</Text>
         <View style={styles.search}>
           <TextInput
             value={value}
@@ -29,6 +34,9 @@ export function Header({ value, onChange }: Props) {
             </Pressable>
           )}
         </View>
+        <Pressable onPress={onOpenCategories} style={styles.categoryButton} accessibilityRole="button">
+          <Text style={styles.categoryText}>{categoryLabel ?? 'Categories'}</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -60,4 +68,13 @@ const styles = StyleSheet.create({
   },
   input: { flex: 1, fontSize: 15, color: colors.text },
   clear: { fontSize: 14, color: colors.muted, paddingLeft: spacing.sm },
+  categoryButton: {
+    backgroundColor: colors.surface,
+    paddingHorizontal: spacing.lg,
+    height: 42,
+    borderRadius: radius.pill,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  categoryText: { fontSize: 14, fontWeight: '600', color: colors.text },
 });

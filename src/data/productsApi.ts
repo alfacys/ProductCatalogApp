@@ -4,9 +4,10 @@ const BASE_URL = 'https://dummyjson.com';
 export const PAGE_SIZE = 20;
 
 /** Builds the list URL. With a query we use the server-side search endpoint. */
-export function buildListUrl(skip: number, query: string): string {
+export function buildListUrl(skip: number, query: string, category: string | null): string {
   const q = query.trim();
   const paging = `limit=${PAGE_SIZE}&skip=${skip}`;
+  if (category) return `${BASE_URL}/products/category/${category}?${paging}`;
   return q
     ? `${BASE_URL}/products/search?q=${encodeURIComponent(q)}&${paging}`
     : `${BASE_URL}/products?${paging}`;
@@ -20,8 +21,8 @@ async function getJson<T>(url: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export function fetchProducts(skip: number, query: string) {
-  return getJson<ProductsResponse>(buildListUrl(skip, query));
+export function fetchProducts(skip: number, query: string, category: string | null = null) {
+  return getJson<ProductsResponse>(buildListUrl(skip, query, category));
 }
 
 export function fetchProduct(id: number) {
