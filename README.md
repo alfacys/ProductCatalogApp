@@ -6,18 +6,17 @@ A product catalog built for the Neurogine Junior Mobile Developer assessment, us
 React Native (Expo, TypeScript)
 
 ## How to run
-​________________
+'''
 npm install
 npx expo start
-​​________________
+'''
 
 Press `i` for iOS simulator, `w` for web, or scan the QR code with Expo Go on your phone.
 
 Run tests:
-​________________
-
+'''
 npm test
-​________________
+​'''
 
 ## Features
 - Product list with thumbnail, title, and price
@@ -30,14 +29,13 @@ npm test
 
 ## Architecture
 ​```
-​________________
 
   data/     API calls and TypeScript types — the only files that call fetch
   hooks/    state and business logic (pagination, search, category filtering, detail loading)
   ui/       screens and presentational components
   utils/    formatting helpers (price, star rating)
   theme/    colors and spacing
-​​________________
+​​'''
 
 [Write 2-3 sentences in your own words about why you split it this way — e.g. "UI components never call fetch directly, they only use hooks, which keeps..."]
 
