@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Product } from '../../data/types';
 import { useDebounce } from '../../hooks/useDebounce';
-import { useProducts } from '../../hooks/useProducts';
+import { useProducts } from '../../hooks/useProduct';
 import { colors, MAX_WIDTH, spacing } from '../../theme/theme';
 import { Header } from '../components/Header';
 import { ProductCard } from '../components/ProductCard';
@@ -75,7 +75,7 @@ export function ProductListScreen() {
 
   return (
     <View style={styles.root}>
-        <Header value={text} onChangeText={setText} />
+        <Header value={text} onChange={setText} />
         <View style={styles.body}>{body}</View>
       <ProductModal product={selected} onClose={() => setSelected(null)} />
     </View>
@@ -109,7 +109,7 @@ function Footer({
 }
 
 const styles = StyleSheet.create({
-root: { flex: 1, backgroundColor: colors.background},
+root: { flex: 1, backgroundColor: colors.bg},
 body: { flex: 1, width:'100%', maxWidth: MAX_WIDTH, alignSelf: 'center' },
 count: { fontSize: 13, color: colors.muted, marginBottom: spacing.lg },
 footer: { paddingVertical: spacing.xl, alignItems: 'center', justifyContent: 'center' },
