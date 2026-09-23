@@ -1,4 +1,4 @@
-import { buildListUrl, fetchProducts } from '../productsApi';
+import { buildListUrl, fetchProducts } from '../productApi';
 
 describe('buildListUrl', () => {
   it('uses the list endpoint with skip when there is no query', () => {
