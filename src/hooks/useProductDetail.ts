@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchProduct } from '../data/productApi';
+import { fetchProduct } from '../data/productsApi';
 import { Product } from '../data/types';
 
 /**
