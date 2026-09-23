@@ -16,7 +16,7 @@ export function Header({ value, onChange, onOpenCategories, categoryLabel }: Pro
         <Text style={styles.promoText}>Free delivery on orders over $50</Text>
       </View>
       <View style={styles.bar}>
-        <Text style={styles.logo}>Shoply</Text>
+        <Text style={styles.logo}>Welcome to Shopping</Text>
         <View style={styles.search}>
           <TextInput
             value={value}
@@ -62,7 +62,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.surface,
-    borderRadius: radius.pill,
+    borderWidth: 1,                  // Added border width
+    borderColor: colors.border,       // Added border color
+    borderRadius: radius.pill || 9999, // Pill rounded ends
     paddingHorizontal: spacing.lg,
     height: 42,
   },
